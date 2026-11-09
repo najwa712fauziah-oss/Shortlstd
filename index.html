@@ -280,6 +280,36 @@ footer{border-top:1px solid var(--line);padding:28px 0;font-size:13px;color:var(
 .pay{display:flex;flex-direction:column;gap:8px}
 .pay label{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
 .pay input{accent-color:var(--blue)}
+
+/* Auth & account */
+.av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;object-fit:cover;flex:none}
+.avbtn{display:inline-flex;align-items:center;gap:8px;border:0;background:#fff;border-radius:999px;padding:4px 12px 4px 4px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 4px 12px rgba(38,54,83,.12)}
+.avbtn:focus-visible,.gbtn:focus-visible,.alink:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+#authSlot{flex-wrap:nowrap;gap:8px}
+@media(max-width:560px){.avn,.authsu{display:none}}
+.modal .abox{max-width:440px}.modal .abox.wide{max-width:740px}
+.fld{display:flex;flex-direction:column;gap:5px;margin-top:12px;font-size:13px;font-weight:600}
+.fld input,.fld select{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-weight:500;background:#fff;width:100%}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)}
+.fld input[readonly]{background:#F5F7FB;color:var(--muted)}
+.pwrow{position:relative;display:block}.pwrow input{padding-right:64px}
+.pwrow button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--blue-dark);font-weight:700;font-size:12px;cursor:pointer;padding:6px}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:11px;font-weight:700;cursor:pointer}
+.gbtn:hover{background:#F8FAFE}
+.or{display:flex;align-items:center;gap:10px;margin:16px 0 0;color:var(--muted);font-size:12px}.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.aerr{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--bad-soft);color:#9B1C1C;font-size:13px;font-weight:600}
+.alink{background:none;border:0;padding:0;color:var(--blue-dark);font-weight:700;cursor:pointer;font-size:inherit}
+.atabs{display:flex;gap:4px;background:#F5F7FB;border-radius:999px;padding:4px;margin-top:14px}
+.atabs button{flex:1;border:0;background:none;border-radius:999px;padding:8px;font-weight:700;cursor:pointer;color:var(--muted)}
+.atabs button.on{background:#fff;color:var(--navy);box-shadow:0 3px 10px rgba(38,54,83,.12)}
+.acct{display:grid;grid-template-columns:170px 1fr;gap:24px;margin-top:18px}
+.aside{display:flex;flex-direction:column;gap:4px}
+.aside button{text-align:left;border:0;background:none;padding:9px 12px;border-radius:12px;font-weight:700;cursor:pointer;color:var(--navy)}
+.aside button.on{background:var(--blue-soft);color:var(--blue-dark)}
+@media(max-width:620px){.acct{grid-template-columns:1fr}.aside{flex-direction:row;overflow-x:auto}}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.sw input{width:20px;height:20px;accent-color:var(--blue);flex:none}
+.dz{margin-top:24px;padding:16px;border-radius:14px;border:1.5px solid var(--bad-soft)}
 </style>
 <link href="[https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap](https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap)" rel="stylesheet">
 </head>
@@ -303,6 +333,7 @@ footer{border-top:1px solid var(--line);padding:28px 0;font-size:13px;color:var(
     <label class="planpick"><span>Demo as</span>
       <select id="planSel" aria-label="Switch demo plan"><option value="free">Free</option><option value="pro">Pro</option><option value="premium">Premium</option></select>
     </label>
+    <div id="authSlot" class="row"></div>
   </div>
   <div class="mnav" id="mnav">
     <a href="#home" data-k="home">Product</a><a href="#app" data-k="app">Live demo</a><a href="#pricing" data-k="pricing">Pricing</a><a href="#business" data-k="business">Business</a><a href="#launch" data-k="launch">Launch</a>
@@ -600,7 +631,7 @@ var state={learned:[],verified:false,tour:-1,shortlist:[],unlocked:[],plan:'pro'
   bookings:[],credits:1,chat:{cv:[],iv:[]},
   setup:{lang:'en',role:'dm',count:5},sim:null,yearly:false,cur:'usd',
   coach:{lang:'en',q:2,ans:'',res:null},
-  biz:{mau:20000,conv:6,prem:25,sess:3,seat:2000,aiMul:1,churn:8,cacMul:1},
+  biz:{mau:20000,conv:10,prem:25,sess:3,seat:2000,aiMul:1,churn:8,cacMul:1},
   waitlist:[]};
 try{var sv=JSON.parse(localStorage.getItem('shortlstd_en')||'null');if(sv){if(typeof sv.cv==='string'&&sv.cv)state.cv=sv.cv;if(sv.role)state.role=sv.role;if(PLANS[sv.plan])state.plan=sv.plan;if(Array.isArray(sv.waitlist))state.waitlist=sv.waitlist;}}catch(e){}
 state.setup.role=state.role;state.credits=PLANS[state.plan].credits;
@@ -1305,6 +1336,125 @@ function confirmBook(mid,kind){
   state.bookings.push({mid:m.id,mentor:m.name,ini:m.ini,col:m.col,topic:kind==='cv'?'CV review':'Interview practice',day:day,time:time,price:useCredit?'Premium credit':money(m.usd*(1-p.disc),m.idr*(1-p.disc)),link:meetCode()});
   closeModal();toast('Booked with '+m.name+' · '+day+' '+time+' WIB');render();
 }
+
+/* =============== AUTH & ACCOUNT (front-end demo: data lives in this browser) =============== */
+var GOOGLE_CLIENT_ID=''; // paste your Google OAuth "Web client" ID here to enable real Google sign-in
+var UK='shortlstd_users',SK='shortlstd_session',au={mode:'in',err:'',f:null,mail:''},at='profile';
+function jget(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}}
+function jset(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function users(){return jget(UK,[]);}
+function byMail(m){return users().filter(function(x){return x.email===m;})[0];}
+function me(){var s=jget(SK,null);return s?users().filter(function(x){return x.id===s.uid;})[0]||null:null;}
+function putUser(u){jset(UK,users().filter(function(x){return x.id!==u.id;}).concat([u]));}
+function salt(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function hashPw(pw,s){var d=new TextEncoder().encode(s+pw);
+  if(window.crypto&&crypto.subtle)return crypto.subtle.digest('SHA-256',d).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return('0'+x.toString(16)).slice(-2);}).join('');});
+  var h=5381;for(var i=0;i<d.length;i++)h=((h<<5)+h+d[i])|0;return Promise.resolve('x'+h);}
+function newUser(nm,em){return {id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:nm,email:em,created:new Date().toISOString(),prefs:{remind:true,news:true,cur:state.cur}};}
+function finish(u,msg){au.err='';putUser(u);jset(SK,{uid:u.id});if(u.prefs&&u.prefs.cur)state.cur=u.prefs.cur;closeModal();toast(msg||('Welcome, '+u.name.split(' ')[0]+'!'));render();}
+function av(u,s){return u.photo?'<img class="av" style="width:'+s+'px;height:'+s+'px" src="'+esc(u.photo)+'" alt="">':'<span class="av" style="width:'+s+'px;height:'+s+'px;font-size:'+Math.round(s*.45)+'px">'+esc((u.name||'?').charAt(0).toUpperCase())+'</span>';}
+function paintAuth(){var u=me(),el=document.getElementById('authSlot');if(!el)return;
+  el.innerHTML=u?'<button class="avbtn" data-act="au-acct" aria-label="Account settings">'+av(u,30)+'<span class="avn">'+esc(u.name.split(' ')[0])+'</span></button>':'<button class="btn ghost sm" data-act="au-login">Log in</button><button class="btn sm authsu" data-act="au-signup">Sign up</button>';}
+function showModal(cls,focus){var b=document.getElementById('modalBox');b.className='box abox '+(cls||'');document.getElementById('modal').classList.add('show');
+  if(focus)setTimeout(function(){var i=b.querySelector('input:not([readonly]):not([type=checkbox])');if(i)i.focus();},30);}
+function fld(l,n,t,v,x){return '<label class="fld">'+l+'<input name="'+n+'" type="'+t+'" value="'+esc(v||'')+'" '+(x||'')+'></label>';}
+function pwf(l,n,ac){return '<label class="fld">'+l+'<span class="pwrow"><input name="'+n+'" type="password" autocomplete="'+ac+'" required><button type="button" data-act="au-pw">Show</button></span></label>';}
+function errBox(f){return au.err&&(!au.f||au.f===f)?'<div class="aerr" role="alert">'+esc(au.err)+'</div>':'';}
+function backBtn(){return '<p class="small" style="margin-top:14px"><button type="button" class="alink" data-act="au-mode" data-id="in">← Back to log in</button></p>';}
+
+function drawAuth(){var m=au.mode,h,T={in:'Welcome back',up:'Create your account',forgot:'Reset your password',reset:'Choose a new password',g:'Continue with Google'};
+  var head='<div class="row between"><h3>'+T[m]+'</h3><button class="btn ghost sm" data-act="closemodal" aria-label="Close">✕</button></div>';
+  if(m==='in'||m==='up'){
+    h=head+'<p class="small muted" style="margin-top:4px">'+(m==='up'?'Save your CV scores, target role and practice history.':'Log in to pick up where you left off.')+'</p>'+
+    '<div class="atabs"><button type="button" data-act="au-mode" data-id="in" class="'+(m==='in'?'on':'')+'">Log in</button><button type="button" data-act="au-mode" data-id="up" class="'+(m==='up'?'on':'')+'">Create account</button></div>'+
+    '<button type="button" class="gbtn" style="margin-top:14px" data-act="au-google"><b style="color:#4285F4;font-size:18px">G</b> Continue with Google</button><div class="or">or use email</div>'+
+    '<form class="authf" data-f="'+m+'" novalidate>'+(m==='up'?fld('Full name','nm','text','','autocomplete="name" required'):'')+fld('Email','em','email','','autocomplete="email" required')+pwf('Password','pw',m==='up'?'new-password':'current-password')+
+    (m==='up'?'<p class="tiny muted" style="margin-top:6px">Use at least 8 characters.</p>':'<div style="margin-top:8px;text-align:right"><button type="button" class="alink small" data-act="au-mode" data-id="forgot">Forgot password?</button></div>')+errBox(m)+
+    '<button class="btn" style="width:100%;margin-top:16px">'+(m==='up'?'Create account':'Log in')+'</button></form><p class="tiny muted" style="margin-top:12px">Demo build: accounts are stored in this browser only.</p>';
+  }else if(m==='forgot'){
+    h=head+'<p class="small muted" style="margin-top:4px">Enter the email you signed up with.</p><form class="authf" data-f="forgot" novalidate>'+fld('Email','em','email','','autocomplete="email" required')+errBox('forgot')+'<button class="btn" style="width:100%;margin-top:16px">Continue</button></form>'+backBtn();
+  }else if(m==='reset'){
+    h=head+'<p class="small muted" style="margin-top:4px">Demo shortcut: a live version would email a reset link first. Setting a new password for <b>'+esc(au.mail)+'</b>.</p><form class="authf" data-f="reset" novalidate>'+pwf('New password','pw','new-password')+pwf('Confirm new password','pw2','new-password')+errBox('reset')+'<button class="btn" style="width:100%;margin-top:16px">Save password</button></form>';
+  }else{
+    h=head+'<p class="small muted" style="margin-top:4px">Demo mode: enter the Google account to continue as. Set <code>GOOGLE_CLIENT_ID</code> in the code to use the real Google sign-in.</p><form class="authf" data-f="g" novalidate>'+fld('Google email','em','email','','autocomplete="email" required')+errBox('g')+'<button class="btn" style="width:100%;margin-top:16px">Continue</button></form>'+backBtn();
+  }
+  document.getElementById('modalBox').innerHTML=h;showModal('',true);
+}
+
+function drawAcct(){var u=me();if(!u)return;
+  var T=[['profile','Profile'],['security','Security'],['prefs','Preferences']],mt=[u.hash?'Email':'',u.google?'Google':''].filter(Boolean),b='';
+  if(at==='profile')b='<div class="row" style="gap:14px">'+av(u,64)+'<div class="stack" style="gap:6px"><div class="row" style="gap:10px"><label class="btn ghost sm" style="cursor:pointer">Change photo<input type="file" accept="image/*" data-pref="photo" hidden></label>'+(u.photo?'<button class="alink small" data-act="au-rmphoto">Remove</button>':'')+'</div><span class="tiny muted">JPG or PNG, cropped to a square.</span></div></div>'+
+    '<form class="authf" data-f="prof" novalidate>'+fld('Full name','nm','text',u.name,'autocomplete="name" required')+fld('Email','em','email',u.email,'readonly')+
+    '<div class="row" style="margin-top:14px;gap:6px"><span class="small muted">Sign-in methods</span>'+mt.map(function(x){return '<span class="chip blue">'+x+'</span>';}).join('')+'</div><p class="tiny muted" style="margin-top:4px">Member since '+new Date(u.created).toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</p>'+errBox('prof')+'<button class="btn" style="margin-top:14px">Save changes</button></form>';
+  else if(at==='security')b=(u.hash?'<form class="authf" data-f="pw" novalidate><h4>Change password</h4>'+pwf('Current password','cur','current-password')+pwf('New password','pw','new-password')+pwf('Confirm new password','pw2','new-password')+errBox('pw')+'<button class="btn" style="margin-top:14px">Update password</button></form>':'<div class="notice blue small">This account signs in with Google, so there is no password to manage here.</div>')+
+    '<div class="dz"><h4>Delete account</h4><p class="small muted" style="margin-top:4px">Removes your profile and settings from this browser. This cannot be undone.</p><form class="authf" data-f="del" novalidate>'+fld('Type your email to confirm','em','email','','autocomplete="off"')+errBox('del')+'<button class="btn danger sm" style="margin-top:12px">Delete my account</button></form></div>';
+  else b='<h4>Display</h4><label class="fld">Currency<select data-pref="cur"><option value="usd"'+(state.cur==='usd'?' selected':'')+'>US dollar ($)</option><option value="idr"'+(state.cur==='idr'?' selected':'')+'>Indonesian rupiah (Rp)</option></select></label><h4 style="margin-top:22px">Notifications</h4>'+
+    [['remind','Practice reminders','A weekly nudge to run a mock interview.'],['news','Product updates','Launch news and new modules.']].map(function(r){return '<label class="sw"><span><b class="small">'+r[1]+'</b><br><span class="tiny muted">'+r[2]+'</span></span><input type="checkbox" data-pref="'+r[0]+'"'+(u.prefs&&u.prefs[r[0]]?' checked':'')+'></label>';}).join('')+
+    '<h4 style="margin-top:22px">Your data</h4><p class="small muted" style="margin-top:4px">Download your profile, target role and CV text as a JSON file.</p><button class="btn ghost sm" style="margin-top:10px" data-act="au-dl">Download my data</button>';
+  document.getElementById('modalBox').innerHTML='<div class="row between"><div class="row" style="gap:12px">'+av(u,44)+'<div><h3>'+esc(u.name)+'</h3><div class="small muted">'+esc(u.email)+'</div></div></div><button class="btn ghost sm" data-act="closemodal" aria-label="Close">✕</button></div>'+
+    '<div class="acct"><div class="aside">'+T.map(function(t){return '<button data-act="au-tab" data-id="'+t[0]+'" class="'+(at===t[0]?'on':'')+'">'+t[1]+'</button>';}).join('')+'<button data-act="au-out" style="color:var(--bad)">Log out</button></div><div>'+b+'</div></div>';
+  showModal('wide',false);
+}
+
+function googleDone(g){if(!g||!g.email){au.f=au.mode;au.err='Google did not return an email address.';return drawAuth();}
+  var em=g.email.toLowerCase(),u=byMail(em)||newUser(g.name||em.split('@')[0],em);u.google=true;if(g.picture&&!u.photo)u.photo=g.picture;finish(u);}
+function googleStart(){
+  if(!GOOGLE_CLIENT_ID){au.mode='g';au.err='';drawAuth();return;}
+  var fail=function(m){au.f=au.mode;au.err=m;drawAuth();};
+  var run=function(){google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:'openid email profile',callback:function(r){
+    if(!r.access_token)return fail('Google sign-in was cancelled.');
+    fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+r.access_token}}).then(function(x){return x.json();}).then(googleDone).catch(function(){fail('Could not reach Google. Check your connection.');});},
+    error_callback:function(){fail('Google sign-in was cancelled.');}}).requestAccessToken();};
+  if(window.google&&google.accounts)return run();
+  var sc=document.createElement('script');sc.src='https://accounts.google.com/gsi/client';sc.onload=run;sc.onerror=function(){fail('Google sign-in could not load.');};document.head.appendChild(sc);
+}
+
+document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var a=b.getAttribute('data-act'),id=b.getAttribute('data-id');
+  if(a.indexOf('au-')!==0)return;
+  if(a==='au-login'||a==='au-signup'){au.mode=a==='au-login'?'in':'up';au.err='';drawAuth();}
+  else if(a==='au-mode'){au.mode=id;au.err='';drawAuth();}
+  else if(a==='au-google')googleStart();
+  else if(a==='au-pw'){var i=b.parentNode.querySelector('input');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Show':'Hide';}
+  else if(a==='au-acct'){at='profile';au.err='';drawAcct();}
+  else if(a==='au-tab'){at=id;au.err='';drawAcct();}
+  else if(a==='au-out'){try{localStorage.removeItem(SK);}catch(x){}closeModal();toast('You are logged out');render();}
+  else if(a==='au-rmphoto'){var u=me();delete u.photo;putUser(u);drawAcct();paintAuth();}
+  else if(a==='au-dl'){var w=me(),d={profile:{name:w.name,email:w.email,created:w.created,prefs:w.prefs},targetRole:state.role,plan:state.plan,cv:state.cv},l=document.createElement('a');
+    l.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));l.download='shortlstd_my_data.json';document.body.appendChild(l);l.click();l.remove();toast('Data downloaded');}
+});
+
+document.addEventListener('submit',function(e){var f=e.target;if(!f.classList||!f.classList.contains('authf'))return;e.preventDefault();
+  var k=f.getAttribute('data-f'),g=function(n){return f.elements[n]?f.elements[n].value:'';},nm=g('nm').trim(),em=g('em').trim().toLowerCase(),pw=g('pw'),u=me();
+  au.f=k;au.err='';
+  var fail=function(m){au.err=m;(k==='prof'||k==='pw'||k==='del')?drawAcct():drawAuth();};
+  if((k==='in'||k==='up'||k==='forgot'||k==='g')&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))return fail('Enter a valid email address.');
+  if(k==='in'){var x=byMail(em);if(!x)return fail('No account uses that email yet. Create one instead.');if(!x.hash)return fail('This email signs in with Google. Use Continue with Google.');
+    hashPw(pw,x.salt).then(function(h){h===x.hash?finish(x):fail('That password does not match. Try again or reset it.');});}
+  else if(k==='up'){if(!nm)return fail('Enter your name.');if(pw.length<8)return fail('Use at least 8 characters for your password.');
+    var ex=byMail(em);if(ex)return fail(ex.hash?'An account with this email already exists. Log in instead.':'This email already signs in with Google. Use Continue with Google.');
+    var s=salt();hashPw(pw,s).then(function(h){var n=newUser(nm,em);n.salt=s;n.hash=h;finish(n);});}
+  else if(k==='forgot'){var y=byMail(em);if(!y||!y.hash)return fail('No password account found for that email.');au.mode='reset';au.mail=em;au.err='';drawAuth();}
+  else if(k==='reset'){if(pw.length<8)return fail('Use at least 8 characters.');if(pw!==g('pw2'))return fail('The two passwords do not match.');
+    var z=byMail(au.mail),s2=salt();hashPw(pw,s2).then(function(h){z.salt=s2;z.hash=h;finish(z,'Password updated. You are logged in.');});}
+  else if(k==='g')googleDone({email:em,name:em.split('@')[0]});
+  else if(!u)return;
+  else if(k==='prof'){if(!nm)return fail('Name cannot be empty.');u.name=nm;putUser(u);paintAuth();au.err='';drawAcct();toast('Profile updated');}
+  else if(k==='pw'){if(pw.length<8)return fail('Use at least 8 characters for the new password.');if(pw!==g('pw2'))return fail('The new passwords do not match.');
+    hashPw(g('cur'),u.salt).then(function(h){if(h!==u.hash)return fail('Current password is incorrect.');var s3=salt();hashPw(pw,s3).then(function(h2){u.salt=s3;u.hash=h2;putUser(u);au.err='';drawAcct();toast('Password updated');});});}
+  else if(k==='del'){if(em!==u.email)return fail('Type your account email exactly to confirm.');jset(UK,users().filter(function(v){return v.id!==u.id;}));try{localStorage.removeItem(SK);}catch(x2){}closeModal();toast('Account deleted');render();}
+});
+
+document.addEventListener('change',function(e){var t=e.target,k=t.getAttribute&&t.getAttribute('data-pref');if(!k)return;var u=me();if(!u)return;u.prefs=u.prefs||{};
+  if(k==='photo'){if(!t.files[0])return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas'),s=Math.min(im.width,im.height);c.width=c.height=160;
+    c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,160,160);u.photo=c.toDataURL('image/jpeg',.85);putUser(u);drawAcct();paintAuth();toast('Photo updated');};im.src=r.result;};r.readAsDataURL(t.files[0]);}
+  else if(k==='cur'){state.cur=t.value;u.prefs.cur=t.value;putUser(u);render();toast('Currency set to '+t.value.toUpperCase());}
+  else{u.prefs[k]=t.checked;putUser(u);toast('Preference saved');}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+var _render=render;render=function(){_render();paintAuth();};
+var _closeModal=closeModal;closeModal=function(){_closeModal();document.getElementById('modalBox').className='box';};
+(function(){var u=me();if(u&&u.prefs&&u.prefs.cur)state.cur=u.prefs.cur;})();
 
 render();
 </script>

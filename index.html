@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shortlstd | Career Readiness Platform · Demo Launch</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="Shortlstd screens your CV, matches you to roles you fit, maps your skill gaps and runs mock interviews in English, Bahasa Indonesia and Mandarin with AI feedback and real HR mentors.">
 <meta name="theme-color" content="#263653">
 <meta property="og:type" content="website">
@@ -26,7 +26,24 @@
   --font:"Figtree",system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+body {
+  background: var(--cream);
+  font-size: 16px;
+  overflow-x: hidden;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.site-wrapper {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
 body{margin:0;background:#fff;color:var(--navy);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.015em;text-wrap:balance}
 h1{font-size:clamp(32px,5.4vw,58px);font-weight:800}
@@ -83,6 +100,11 @@ button:focus,button:focus-visible,.btn:focus,.btn:focus-visible{outline:none}
 .chip.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
 
 /* Top bar */
+.top-banner, 
+.nav-pills-container {
+  overflow: hidden; 
+  width: 100%;
+}
 .top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(38,54,83,.06)}
 .top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 0}
 .brand{order:1;display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;text-decoration:none;color:var(--navy);letter-spacing:-.03em;margin-left:30px;margin-right:8px}
@@ -350,7 +372,13 @@ footer{border-top:1px solid var(--line);padding:28px 0;font-size:13px;color:var(
 .sw input{width:20px;height:20px;accent-color:var(--blue);flex:none}
 .dz{margin-top:24px;padding:16px;border-radius:14px;border:1.5px solid var(--bad-soft)}
 :root{--orange:#FFD43B;--orange-soft:#FFEFB8;--yellow-soft:#FFEFB8;--blue-dark:#3569B8;--good:#3977D5;--good-soft:#E8F0FC;--warn:#263653;--bad:#263653;--bad-soft:#FFEFB8;--surface:rgba(255,255,255,.62);--line:rgba(38,54,83,.13);--muted:#55627B;--serif:"Fraunces",Georgia,"Noto Serif CJK SC",serif;--ease:cubic-bezier(.2,.8,.2,1)}
-body{background:var(--cream);font-size:16px;overflow-x:clip}
+body {
+  background: var(--cream);
+  font-size: 16px;
+  overflow-x: hidden;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
 h1,h2,h3,.stat .n,.big,.proof b{font-family:var(--serif);font-weight:600;letter-spacing:-.025em}
 :focus-visible{outline:2px solid var(--blue)!important;outline-offset:3px}
 .ic{width:1.05em;height:1.05em;vertical-align:-.16em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -364,7 +392,7 @@ h1,h2,h3,.stat .n,.big,.proof b{font-family:var(--serif);font-weight:600;letter-
 .prog{position:fixed;top:0;left:0;right:0;height:3px;background:var(--blue);transform-origin:0 50%;scale:var(--p,0) 1;z-index:80}
 @media (hover:none){.spot{display:none}}
 .top{top:10px;margin:10px auto 0;width:min(1180px,calc(100% - 24px));border:1px solid rgba(255,255,255,.8);border-radius:28px;background:rgba(255,249,233,.55);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:0 12px 30px -14px rgba(38,54,83,.3)}
-.top .wrap{height:60px;transition:height .4s var(--ease)}.top.sm .wrap{height:50px}
+@media (min-width:861px){.top .wrap{height:60px;transition:height .4s var(--ease)}.top.sm .wrap{height:50px}}
 .brand{transition:scale .3s var(--ease)}.brand:hover{scale:1.04}
 .nav a{transition:background .25s,color .25s}
 .pulse{display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--yellow);animation:pu 1.6s infinite}
@@ -407,7 +435,7 @@ select,input[type=text],input[type=email],input[type=number],textarea{background
 .chip.org{color:var(--navy)}
 .rv{opacity:0;translate:0 34px;scale:.97;transition:opacity .8s var(--ease),translate .8s var(--ease),scale .8s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
 .rv.in{opacity:1;translate:0 0;scale:1}
-.stat.rv{translate:0 0;scale:.88}.step.rv{translate:-30px 0}
+.stat.rv{translate:0 0;scale:.88}.step.rv{translate:-30px 0}.stat.rv.in,.step.rv.in{translate:0 0;scale:1}
 .rv.tilt{transition:opacity .8s var(--ease),translate .8s var(--ease),scale .8s var(--ease),transform .3s var(--ease)}
 #view.pg>*{animation:pg .7s var(--ease) both}@keyframes pg{from{opacity:0;translate:0 24px}}
 @media (prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}.rv,.w>span{opacity:1!important;translate:none!important;scale:none!important}.hero h1 .hl{background-size:100% 100%}}
@@ -425,11 +453,24 @@ h1,h2,h3,.stat .n,.big,.proof b,.marq div{font-variation-settings:"SOFT" 100}
 .nav a::after{content:"";position:absolute;left:50%;bottom:3px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--yellow);scale:0;transition:scale .3s var(--ease)}
 .eyebrow::before{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE27A,#FFD43B 55%,#F5B400);animation:pop .8s var(--ease) both}
 @keyframes pop{from{scale:0;translate:-14px 0}}
-
+/* ===== FIX HEADER MOBILE ===== */
+@media (max-width:860px){
+  .top{width:auto;margin:10px 12px 0}
+  .top .wrap{height:auto;padding:10px 14px;gap:8px 10px;justify-content:space-between}
+  .brand{margin-left:0;margin-right:0}
+  .brand-img{height:32px!important}
+  .nav{order:4;flex-basis:100%;overflow-x:auto;padding:10px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .nav::-webkit-scrollbar{display:none}
+  .planpick{order:2}
+  #authSlot{order:3}
+}
+@media (max-width:860px){
+  .loop .step{padding-left:2px;padding-right:4px}
+}
 </style>
 </head>
 <body>
-
+<div class="site-wrapper"></div>
 <div class="launchbar"><div class="wrap"><span><i class="pulse"></i><b>Demo Launch</b> · November 2026 · Founding members get 50% off Pro for 12 months</span><a href="#launch">Join the waitlist →</a><button data-act="tour" class="btn-tour">▶ Guided tour</button></div></div>
 
 <header class="top">

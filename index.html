@@ -103,6 +103,15 @@ button:focus,button:focus-visible,.btn:focus,.btn:focus-visible{outline:none}
 .brand:hover .brand-img {
   rotate: -10deg; /* Memberikan efek miring saat di-hover */
 }
+.brand-img {
+  height: 26px; 
+  width: auto;
+  transition: rotate .5s var(--ease);
+  margin-right: 0px; /* Ubah angka ini. Gunakan nilai yang lebih kecil (misal: 2px, 0px) atau bahkan negatif (misal: -2px, -5px) untuk merapatkan jaraknya */
+}
+.brand {
+  gap: 1px; /* Ubah ke 0px atau angka kecil lainnya untuk merapatkan jarak */
+}
 @media (min-width:861px){
   .top .wrap{flex-wrap:nowrap;height:64px;gap:18px;padding:0}
   .nav{order:2;flex-basis:auto;margin-left:auto;margin-top:0;padding-top:0;border-top:0;overflow-x:visible;gap:4px}

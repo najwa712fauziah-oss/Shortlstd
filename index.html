@@ -94,6 +94,15 @@ button:focus,button:focus-visible,.btn:focus,.btn:focus-visible{outline:none}
 .planpick{order:2;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
 .planpick span{display:none}
 .planpick select{border:0;background:#fff;border-radius:999px;padding:6px 10px;font-weight:700;box-shadow:0 4px 12px rgba(38,54,83,.12)}
+.brand-img {
+  height: 26px; /* Silakan ubah angka ini agar tinggi gambar pas dengan teks */
+  width: auto;
+  transition: rotate .5s var(--ease); /* Memanggil variabel animasi bawaan */
+}
+
+.brand:hover .brand-img {
+  rotate: -10deg; /* Memberikan efek miring saat di-hover */
+}
 @media (min-width:861px){
   .top .wrap{flex-wrap:nowrap;height:64px;gap:18px;padding:0}
   .nav{order:2;flex-basis:auto;margin-left:auto;margin-top:0;padding-top:0;border-top:0;overflow-x:visible;gap:4px}
@@ -416,7 +425,10 @@ h1,h2,h3,.stat .n,.big,.proof b,.marq div{font-variation-settings:"SOFT" 100}
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#home" aria-label="Shortlstd home"><span class="brand-mark" aria-hidden="true">S</span>Shortlstd</a>
+    <a class="brand" href="#home" aria-label="Shortlstd home">
+      <img src="logo-shortlstd.png" style="height: 72px;" alt="Logo" class="brand-img">
+      Shortlstd
+</a>
     <nav class="nav" id="nav">
       <a href="#home" data-k="home">Product</a>
       <a href="#app" data-k="app">Live demo</a>
